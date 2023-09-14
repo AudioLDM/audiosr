@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="Hugo 0.66.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,600" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+  <link rel="stylesheet" href="../css/normalize.css">
+  <link rel="stylesheet" href="../css/skeleton.css">
+  <link rel="stylesheet" href="../css/custom.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="alternate" href="index.xml" type="application/rss+xml" title="Speech Research">
+  <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
+  <title>AudioSR: Versatile Audio Super-resolution at Scale</title>
+</head>
+
+<body rightmargin="150" leftmargin="150" topmargin="100" bottommargin="100" line-height:160%>
+  <font size="5">
+
+    <div class="container" style="padding-left: 0; padding-right: 0;" >
+
+      <header role="banner">
+
+      </header>
+      <main role="main">
+        <article itemscope itemtype="https://schema.org/BlogPosting">
+          <br></br>
+          <h1 itemprop="headline" align="center">
+            <font color="000093" size="7">AudioSR: Versatile Audio Super-resolution at Scale</br>
+            </font>
+          </h1>
+          <br></br>
+          <p style="line-height:1" align="center"><b>
+              <font color="061E61">Haohe Liu<sup>1</sup>, Ke Chen<sup>2</sup>, Qiao Tian<sup>3</sup>, Wenwu Wang<sup>1</sup>, Mark D. Plumbley<sup>1</sup></font>
+            </b></p>
+          <p style="line-height:0.6" align="center">
+            <font color="061E61"><sup>1</sup>CVSSP, University of Surrey</font>
+          </p>
+          <p style="line-height:0.6" align="center">
+            <font color="061E61"> <sup>2</sup>University of California San Diego</font>
+          </p>
+          <p style="line-height:0.6" align="center">
+            <font color="061E61"> <sup>3</sup>Speech, Audio & Music Intelligence (SAMI), Bytedance</font>
+          </p>
+          <section itemprop="entry-text">
+            <br>
+            <div class="container">
+              <center>
+                <p><a href="">[Paper on ArXiv]</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/haoheliu/AudioLDM">[Code on GitHub]</a></p>
+              </center>
+            </div>
+            <h2 id="abstract">
+              <font color="000093">Abstract</font>
+            </h2>
+            <p style="text-align: justify;">
+              <font color="061E61"> 
+                Audio super-resolution is a fundamental task that predicts high-frequency components for low-resolution audio, enhancing audio quality in digital applications. 
+                Previous methods have limitations such as the limited scope of audio types~(e.g., music, speech) and specific bandwidth settings they can handle (e.g., 4 kHz to 8 kHz). 
+                W introduce a diffusion-based generative model, AudioSR, that is capable of performing robust audio super-resolution on versatile audio types, including sound effects, music, and speech. 
+                Specifically, AudioSR can upsample any input audio signal within the bandwidth range of 2 kHz to 16 kHz to a high-resolution audio signal at 24 kHz bandwidth with a sampling rate of 48 kHz.
+                Extensive objective evaluation on various audio super-resolution benchmarks demonstrates the strong result achieved by the proposed model. 
+                In addition, our subjective evaluation shows that AudioSR can acts as a plug-and-play module to enhance the generation quality of a wide range of audio generative models, 
+                including AudioLDM, Fastspeech2, and MusicGen. 
+              </font>
+            </p>
+
+            <!-- <h2 id="note">
+              <font color="000093">Note</font>
+            </h2>
+            <li>
+              <font color="061E61"> AudioLDM generates text-conditional sound effects, human speech, and music.</font>
+            </li>
+            <li>
+              <font color="061E61"> The LDM is trained on a single GPU, without text supervision. </font>
+            </li>
+            <li>
+              <font color="061E61"> AudioLDM enables zero-shot text-guided audio style-transfer, inpainting, and
+                super-resolution.</font>
+            </li> -->
+
+            <br></br>
+            <figure>
+              <p align="center"><img src="model_arch.png" width="80%" class="center" /></p>
+              <figcaption>
+                <p style="text-align: justify;">
+                  <font color="061E61"><b>Figure 1:</b> 
+                    The AudioSR architecture. 
+                    The replacement-based post-processing aims to preserve the original lower-frequency information in the model output.
+                </p>
+              </figcaption>
+            </figure>
+            <!-- <table class="table" align="center" style="table-layout: fixed;word-break:break-word">
+              <thead>
+                <tr>
+                  <th scope="col" width="50%">
+                    <font color="061E61">One-minute overview for a quick-taste</font>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th><embed src="Sound Effects.mp4" autostart="false" width="35%" /></th>
+                  <th>
+                    <center>
+                      <video width="800" controls>
+                        <source src="Overview.mp4" type="video/mp4">
+                        Your browser does not support HTML video.
+                      </video>
+                      <p>The following sections show more demos.</p>
+                    </center>
+                    
+                  </th>
+                  
+                </tr>
+              </tbody>
+            </table> -->
+            
+
+            <br></br>
+            <h2 id="TTA Generation with Human Text Prompt">
+              <font color="000093">Audio Super-Resolution across Different Models</font>
+            </h2>
+
+            <p><b>
+                <font color="061E61">Speech:</font>
+              </b></p>
+
+
+            <table class="table" align="center" style="table-layout: fixed;word-break:break-word">
+              <thead>
+                <tr>
+                  <td scope="col" width="20%">
+                    <font color="061E61">8 kHz Sample</font>
+                  </td>
+                  <td scope="col" width="20%">
+                    <font color="061E61">NVSR-DNN</font>
+                  </td>
+                  <td scope="col" width="20%">
+                    <font color="061E61">NVSR-ResUNet</font>
+                  </td>
+                  <td scope="col" width="20%">
+                    <font color="061E61">AudioSR</font>
+                  </td>
+                  <td scope="col" width="20%">
+                    <font color="061E61">Ground-Truth</font>
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td scope="row" width="20%">
+                    <div>
+                    <audio controls="controls" style="width: 100%;">
+                      <source src="vis_demo/speech_up_1.wav" />Your browser does not support the audio element.
+                    </audio>
+                    </div> 
+                    <div>
+                      <figure>
+                        <p align="center"><img src="vis_demo/speech_up_1.png" width="100%" height="180px" class="center" /></p>
+                      </figure>
+                    </div> 
+                  </td>
+
+                  <td scope="row" width="20%">
+                    <div>
+                    <audio controls="controls" style="width: 100%;">
+                      <source src="vis_demo/speech_dnn_1.wav" />Your browser does not support the audio element.
+                    </audio>
+                    </div> 
+                    <div>
+                      <figure>
+                        <p align="center"><img src="vis_demo/speech_dnn_1.png" width="100%" height="180px" class="center" /></p>
+                      </figure>
+                    </div> 
+                  </td>
+
+                  <td scope="row" width="20%">
+                    <div>
+                    <audio controls="controls" style="width: 100%;">
+                      <source src="vis_demo/speech_resunet_1.wav" />Your browser does not support the audio element.
+                    </audio>
+                    </div> 
+                    <div>
+                      <figure>
+                        <p align="center"><img src="vis_demo/speech_resunet_1.png" width="100%" height="180px" class="center" /></p>
+                      </figure>
+                    </div> 
+                  </td>
+
+                  <td scope="row" width="20%">
+                    <div>
+                    <audio controls="controls" style="width: 100%;">
+                      <source src="vis_demo/speech_audiosr_1.wav" />Your browser does not support the audio element.
+                    </audio>
+                    </div> 
+                    <div>
+                      <figure>
+                        <p align="center"><img src="vis_demo/speech_audiosr_1.png" width="100%"  height="180px" class="center" /></p>
+                      </figure>
+                    </div> 
+                  </td>
+
+                  <td scope="row" width="20%">
+                    <div>
+                    <audio controls="controls" style="width: 100%;">
+                      <source src="vis_demo/speech_gt_1.wav" />Your browser does not support the audio element.
+                    </audio>
+                    </div> 
+                    <div>
+                      <figure>
+                        <p align="center"><img src="vis_demo/speech_gt_1.png" width="100%"  height="180px" class="center" /></p>
+                      </figure>
+                    </div> 
+                  </td>
+                </tr>
+
+                <tr>
+                  <td scope="row" width="20%">
+                    <div>
+                    <audio controls="controls" style="width: 100%;">
+                      <source src="vis_demo/speech_up_2.wav" />Your browser does not support the audio element.
+                    </audio>
+                    </div> 
+                    <div>
+                      <figure>
+                        <p align="center"><img src="vis_demo/speech_up_2.png" width="100%" height="180px" class="center" /></p>
+                      </figure>
+                    </div> 
+                  </td>
+
+                  <td scope="row" width="20%">
+                    <div>
+                    <audio controls="controls" style="width: 100%;">
+                      <source src="vis_demo/speech_dnn_2.wav" />Your browser does not support the audio element.
+                    </audio>
+                    </div> 
+                    <div>
+                      <figure>
+                        <p align="center"><img src="vis_demo/speech_dnn_2.png" width="100%" height="180px" class="center" /></p>
+                      </figure>
+                    </div> 
+                  </td>
+
+                  <td scope="row" width="20%">
+                    <div>
+                    <audio controls="controls" style="width: 100%;">
+                      <source src="vis_demo/speech_resunet_2.wav" />Your browser does not support the audio element.
+                    </audio>
+                    </div> 
+                    <div>
+                      <figure>
+                        <p align="center"><img src="vis_demo/speech_resunet_2.png" width="100%" height="180px" class="center" /></p>
+                      </figure>
+                    </div> 
+                  </td>
+
+                  <td scope="row" width="20%">
+                    <div>
+                    <audio controls="controls" style="width: 100%;">
+                      <source src="vis_demo/speech_audiosr_2.wav" />Your browser does not support the audio element.
+                    </audio>
+                    </div> 
+                    <div>
+                      <figure>
+                        <p align="center"><img src="vis_demo/speech_audiosr_2.png" width="100%" height="180px" class="center" /></p>
+                      </figure>
+                    </div> 
+                  </td>
+
+                  <td scope="row" width="20%">
+                    <div>
+                    <audio controls="controls" style="width: 100%;">
+                      <source src="vis_demo/speech_gt_2.wav" />Your browser does not support the audio element.
+                    </audio>
+                    </div> 
+                    <div>
+                      <figure>
+                        <p align="center"><img src="vis_demo/speech_gt_2.png" width="100%"  height="180px" class="center" /></p>
+                      </figure>
+                    </div> 
+                  </td>
+                </tr>
+
+                <tr>
+                  <td scope="row" width="20%">
+                    <div>
+                    <audio controls="controls" style="width: 100%;">
+                      <source src="vis_demo/speech_up_3.wav" />Your browser does not support the audio element.
+                    </audio>
+                    </div> 
+                    <div>
+                      <figure>
+                        <p align="center"><img src="vis_demo/speech_up_3.png" width="100%" height="180px" class="center" /></p>
+                      </figure>
+                    </div> 
+                  </td>
+
+                  <td scope="row" width="20%">
+                    <div>
+                    <audio controls="controls" style="width: 100%; ">
+                      <source src="vis_demo/speech_dnn_3.wav" />Your browser does not support the audio element.
+                    </audio>
+                    </div> 
+                    <div>
+                      <figure>
+                        <p align="center"><img src="vis_demo/speech_dnn_3.png" width="100%" height="180px" class="center" /></p>
+                      </figure>
+                    </div> 
+                  </td>
+
+                  <td scope="row" width="20%">
+                    <div>
+                    <audio controls="controls" style="width: 100%;">
+                      <source src="vis_demo/speech_resunet_3.wav" />Your browser does not support the audio element.
+                    </audio>
+                    </div> 
+                    <div>
+                      <figure>
+                        <p align="center"><img src="vis_demo/speech_resunet_3.png" width="100%" height="180px" class="center" /></p>
+                      </figure>
+                    </div> 
+                  </td>
+
+                  <td scope="row" width="20%">
+                    <div>
+                    <audio controls="controls" style="width: 100%;">
+                      <source src="vis_demo/speech_audiosr_3.wav" />Your browser does not support the audio element.
+                    </audio>
+                    </div> 
+                    <div>
+                      <figure>
+                        <p align="center"><img src="vis_demo/speech_audiosr_3.png" width="100%" height="180px" class="center" /></p>
+                      </figure>
+                    </div> 
+                  </td>
+
+                  <td scope="row" width="20%">
+                    <div>
+                    <audio controls="controls" style="width: 100%;">
+                      <source src="vis_demo/speech_gt_3.wav" />Your browser does not support the audio element.
+                    </audio>
+                    </div> 
+                    <div>
+                      <figure>
+                        <p align="center"><img src="vis_demo/speech_gt_3.png" width="100%" height="180px" class="center" /></p>
+                      </figure>
+                    </div> 
+                  </td>
+                </tr>
+
+                <tr>
+                  <td scope="row" width="20%">
+                    <div>
+                    <audio controls="controls" style="width: 100%;">
+                      <source src="vis_demo/speech_up_4.wav" />Your browser does not support the audio element.
+                    </audio>
+                    </div> 
+                    <div>
+                      <figure>
+                        <p align="center"><img src="vis_demo/speech_up_4.png" width="100%" height="180px" class="center" /></p>
+                      </figure>
+                    </div> 
+                  </td>
+
+                  <td scope="row" width="20%">
+                    <div>
+                    <audio controls="controls" style="width: 100%;">
+                      <source src="vis_demo/speech_dnn_4.wav" />Your browser does not support the audio element.
+                    </audio>
+                    </div> 
+                    <div>
+                      <figure>
+                        <p align="center"><img src="vis_demo/speech_dnn_4.png" width="100%" height="180px" class="center" /></p>
+                      </figure>
+                    </div> 
+                  </td>
+
+                  <td scope="row" width="20%">
+                    <div>
+                    <audio controls="controls" style="width: 100%;">
+                      <source src="vis_demo/speech_resunet_4.wav" />Your browser does not support the audio element.
+                    </audio>
+                    </div> 
+                    <div>
+                      <figure>
+                        <p align="center"><img src="vis_demo/speech_resunet_4.png" width="100%" height="180px" class="center" /></p>
+                      </figure>
+                    </div> 
+                  </td>
+
+                  <td scope="row" width="20%">
+                    <div>
+                    <audio controls="controls" style="width: 100%;">
+                      <source src="vis_demo/speech_audiosr_4.wav" />Your browser does not support the audio element.
+                    </audio>
+                    </div> 
+                    <div>
+                      <figure>
+                        <p align="center"><img src="vis_demo/speech_audiosr_4.png" width="100%" height="180px" class="center" /></p>
+                      </figure>
+                    </div> 
+                  </td>
+
+                  <td scope="row" width="20%">
+                    <div>
+                    <audio controls="controls" style="width: 100%;">
+                      <source src="vis_demo/speech_gt_4.wav" />Your browser does not support the audio element.
+                    </audio>
+                    </div> 
+                    <div>
+                      <figure>
+                        <p align="center"><img src="vis_demo/speech_gt_4.png" width="100%" height="180px" class="center" /></p>
+                      </figure>
+                    </div> 
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p><b>
+              <font color="061E61">Event:</font>
+            </b></p>
+
+
+          <table class="table" align="center" style="table-layout: fixed;word-break:break-word">
+            <thead>
+              <tr>
+                <td scope="col" width="20%">
+                  <font color="061E61">8 kHz Sample</font>
+                </td>
+                <td scope="col" width="20%">
+                  <font color="061E61">NVSR-DNN</font>
+                </td>
+                <td scope="col" width="20%">
+                  <font color="061E61">NVSR-ResUNet</font>
+                </td>
+                <td scope="col" width="20%">
+                  <font color="061E61">AudioSR</font>
+                </td>
+                <td scope="col" width="20%">
+                  <font color="061E61">Ground-Truth</font>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td scope="row" width="20%">
+                  <div>
+                  <audio controls="controls" style="width: 100%;">
+                    <source src="vis_demo/event_up_1.wav" />Your browser does not support the audio element.
+                  </audio>
+                  </div> 
+                  <div>
+                    <figure>
+                      <p align="center"><img src="vis_demo/event_up_1.png" width="100%" height="180px" class="center" /></p>
+                    </figure>
+                  </div> 
+                </td>
+
+                <td scope="row" width="20%">
+                  <div>
+                  <audio controls="controls" style="width: 100%;">
+                    <source src="vis_demo/event_dnn_1.wav" />Your browser does not support the audio element.
+                  </audio>
+                  </div> 
+                  <div>
+                    <figure>
+                      <p align="center"><img src="vis_demo/event_dnn_1.png" width="100%" height="180px" class="center" /></p>
+                    </figure>
+                  </div> 
+                </td>
+
+                <td scope="row" width="20%">
+                  <div>
+                  <audio controls="controls" style="width: 100%;">
+                    <source src="vis_demo/event_resunet_1.wav" />Your browser does not support the audio element.
+                  </audio>
+                  </div> 
+                  <div>
+                    <figure>
+                      <p align="center"><img src="vis_demo/event_resunet_1.png" width="100%" height="180px" class="center" /></p>
+                    </figure>
+                  </div> 
+                </td>
+
+                <td scope="row" width="20%">
+                  <div>
+                  <audio controls="controls" style="width: 100%;">
+                    <source src="vis_demo/event_audiosr_1.wav" />Your browser does not support the audio element.
+                  </audio>
+                  </div> 
+                  <div>
+                    <figure>
+                      <p align="center"><img src="vis_demo/event_audiosr_1.png" width="100%"  height="180px" class="center" /></p>
+                    </figure>
+                  </div> 
+                </td>
+
+                <td scope="row" width="20%">
+                  <div>
+                  <audio controls="controls" style="width: 100%;">
+                    <source src="vis_demo/event_gt_1.wav" />Your browser does not support the audio element.
+                  </audio>
+                  </div> 
+                  <div>
+                    <figure>
+                      <p align="center"><img src="vis_demo/event_gt_1.png" width="100%"  height="180px" class="center" /></p>
+                    </figure>
+                  </div> 
+                </td>
+              </tr>
+
+              <tr>
+                <td scope="row" width="20%">
+                  <div>
+                  <audio controls="controls" style="width: 100%;">
+                    <source src="vis_demo/event_up_2.wav" />Your browser does not support the audio element.
+                  </audio>
+                  </div> 
+                  <div>
+                    <figure>
+                      <p align="center"><img src="vis_demo/event_up_2.png" width="100%" height="180px" class="center" /></p>
+                    </figure>
+                  </div> 
+                </td>
+
+                <td scope="row" width="20%">
+                  <div>
+                  <audio controls="controls" style="width: 100%;">
+                    <source src="vis_demo/event_dnn_2.wav" />Your browser does not support the audio element.
+                  </audio>
+                  </div> 
+                  <div>
+                    <figure>
+                      <p align="center"><img src="vis_demo/event_dnn_2.png" width="100%" height="180px" class="center" /></p>
+                    </figure>
+                  </div> 
+                </td>
+
+                <td scope="row" width="20%">
+                  <div>
+                  <audio controls="controls" style="width: 100%;">
+                    <source src="vis_demo/event_resunet_2.wav" />Your browser does not support the audio element.
+                  </audio>
+                  </div> 
+                  <div>
+                    <figure>
+                      <p align="center"><img src="vis_demo/event_resunet_2.png" width="100%" height="180px" class="center" /></p>
+                    </figure>
+                  </div> 
+                </td>
+
+                <td scope="row" width="20%">
+                  <div>
+                  <audio controls="controls" style="width: 100%;">
+                    <source src="vis_demo/event_audiosr_2.wav" />Your browser does not support the audio element.
+                  </audio>
+                  </div> 
+                  <div>
+                    <figure>
+                      <p align="center"><img src="vis_demo/event_audiosr_2.png" width="100%" height="180px" class="center" /></p>
+                    </figure>
+                  </div> 
+                </td>
+
+                <td scope="row" width="20%">
+                  <div>
+                  <audio controls="controls" style="width: 100%;">
+                    <source src="vis_demo/event_gt_2.wav" />Your browser does not support the audio element.
+                  </audio>
+                  </div> 
+                  <div>
+                    <figure>
+                      <p align="center"><img src="vis_demo/event_gt_2.png" width="100%"  height="180px" class="center" /></p>
+                    </figure>
+                  </div> 
+                </td>
+              </tr>
+
+              <tr>
+                <td scope="row" width="20%">
+                  <div>
+                  <audio controls="controls" style="width: 100%;">
+                    <source src="vis_demo/event_up_3.wav" />Your browser does not support the audio element.
+                  </audio>
+                  </div> 
+                  <div>
+                    <figure>
+                      <p align="center"><img src="vis_demo/event_up_3.png" width="100%" height="180px" class="center" /></p>
+                    </figure>
+                  </div> 
+                </td>
+
+                <td scope="row" width="20%">
+                  <div>
+                  <audio controls="controls" style="width: 100%; ">
+                    <source src="vis_demo/event_dnn_3.wav" />Your browser does not support the audio element.
+                  </audio>
+                  </div> 
+                  <div>
+                    <figure>
+                      <p align="center"><img src="vis_demo/event_dnn_3.png" width="100%" height="180px" class="center" /></p>
+                    </figure>
+                  </div> 
+                </td>
+
+                <td scope="row" width="20%">
+                  <div>
+                  <audio controls="controls" style="width: 100%;">
+                    <source src="vis_demo/event_resunet_3.wav" />Your browser does not support the audio element.
+                  </audio>
+                  </div> 
+                  <div>
+                    <figure>
+                      <p align="center"><img src="vis_demo/event_resunet_3.png" width="100%" height="180px" class="center" /></p>
+                    </figure>
+                  </div> 
+                </td>
+
+                <td scope="row" width="20%">
+                  <div>
+                  <audio controls="controls" style="width: 100%;">
+                    <source src="vis_demo/event_audiosr_3.wav" />Your browser does not support the audio element.
+                  </audio>
+                  </div> 
+                  <div>
+                    <figure>
+                      <p align="center"><img src="vis_demo/event_audiosr_3.png" width="100%" height="180px" class="center" /></p>
+                    </figure>
+                  </div> 
+                </td>
+
+                <td scope="row" width="20%">
+                  <div>
+                  <audio controls="controls" style="width: 100%;">
+                    <source src="vis_demo/event_gt_3.wav" />Your browser does not support the audio element.
+                  </audio>
+                  </div> 
+                  <div>
+                    <figure>
+                      <p align="center"><img src="vis_demo/event_gt_3.png" width="100%" height="180px" class="center" /></p>
+                    </figure>
+                  </div> 
+                </td>
+              </tr>
+   
+            </tbody>
+          </table>
+
+          <p><b>
+            <font color="061E61">Music:</font>
+          </b></p>
+
+
+        <table class="table" align="center" style="table-layout: fixed;word-break:break-word">
+          <thead>
+            <tr>
+              <td scope="col" width="33%">
+                <font color="061E61">8 kHz Sample</font>
+              <td scope="col" width="33%">
+                <font color="061E61">AudioSR</font>
+              </td>
+              <td scope="col" width="33%">
+                <font color="061E61">Ground-Truth</font>
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td scope="row" width="33%">
+                <div>
+                <audio controls="controls" style="width: 100%;">
+                  <source src="vis_demo/music_up_1.wav" />Your browser does not support the audio element.
+                </audio>
+                </div> 
+                <div>
+                  <figure>
+                    <p align="center"><img src="vis_demo/music_up_1.png" width="100%" height="180px" class="center" /></p>
+                  </figure>
+                </div> 
+              </td>
+              <td scope="row" width="33%">
+                <div>
+                <audio controls="controls" style="width: 100%;">
+                  <source src="vis_demo/music_audiosr_1.wav" />Your browser does not support the audio element.
+                </audio>
+                </div> 
+                <div>
+                  <figure>
+                    <p align="center"><img src="vis_demo/music_audiosr_1.png" width="100%"  height="180px" class="center" /></p>
+                  </figure>
+                </div> 
+              </td>
+
+              <td scope="row" width="33%">
+                <div>
+                <audio controls="controls" style="width: 100%;">
+                  <source src="vis_demo/music_gt_1.wav" />Your browser does not support the audio element.
+                </audio>
+                </div> 
+                <div>
+                  <figure>
+                    <p align="center"><img src="vis_demo/music_gt_1.png" width="100%"  height="180px" class="center" /></p>
+                  </figure>
+                </div> 
+              </td>
+          </tr>
+
+          <tr>
+            <td scope="row" width="33%">
+              <div>
+              <audio controls="controls" style="width: 100%;">
+                <source src="vis_demo/music_up_2.wav" />Your browser does not support the audio element.
+              </audio>
+              </div> 
+              <div>
+                <figure>
+                  <p align="center"><img src="vis_demo/music_up_2.png" width="100%" height="180px" class="center" /></p>
+                </figure>
+              </div> 
+            </td>
+            <td scope="row" width="33%">
+              <div>
+              <audio controls="controls" style="width: 100%;">
+                <source src="vis_demo/music_audiosr_2.wav" />Your browser does not support the audio element.
+              </audio>
+              </div> 
+              <div>
+                <figure>
+                  <p align="center"><img src="vis_demo/music_audiosr_2.png" width="100%"  height="180px" class="center" /></p>
+                </figure>
+              </div> 
+            </td>
+
+            <td scope="row" width="33%">
+              <div>
+              <audio controls="controls" style="width: 100%;">
+                <source src="vis_demo/music_gt_2.wav" />Your browser does not support the audio element.
+              </audio>
+              </div> 
+              <div>
+                <figure>
+                  <p align="center"><img src="vis_demo/music_gt_2.png" width="100%"  height="180px" class="center" /></p>
+                </figure>
+              </div> 
+            </td>
+        </tr>
+
+        <tr>
+          <td scope="row" width="33%">
+            <div>
+            <audio controls="controls" style="width: 100%;">
+              <source src="vis_demo/music_up_3.wav" />Your browser does not support the audio element.
+            </audio>
+            </div> 
+            <div>
+              <figure>
+                <p align="center"><img src="vis_demo/music_up_3.png" width="100%" height="180px" class="center" /></p>
+              </figure>
+            </div> 
+          </td>
+          <td scope="row" width="33%">
+            <div>
+            <audio controls="controls" style="width: 100%;">
+              <source src="vis_demo/music_audiosr_3.wav" />Your browser does not support the audio element.
+            </audio>
+            </div> 
+            <div>
+              <figure>
+                <p align="center"><img src="vis_demo/music_audiosr_3.png" width="100%"  height="180px" class="center" /></p>
+              </figure>
+            </div> 
+          </td>
+
+          <td scope="row" width="33%">
+            <div>
+            <audio controls="controls" style="width: 100%;">
+              <source src="vis_demo/music_gt_3.wav" />Your browser does not support the audio element.
+            </audio>
+            </div> 
+            <div>
+              <figure>
+                <p align="center"><img src="vis_demo/music_gt_3.png" width="100%"  height="180px" class="center" /></p>
+              </figure>
+            </div> 
+          </td>
+      </tr>
+          </tbody>
+        </table>
+           
+          </section>
+        </article>
+      </main>
+
+    </div>
+
+    <script>
+      (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+          (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+          m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+      })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+      ga('create', 'UA-139981676-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+    <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+         HTML: ["input/TeX","output/HTML-CSS"],
+         TeX: {
+                Macros: {
+                         bm: ["\\boldsymbol{#1}", 1],
+                         argmax: ["\\mathop{\\rm arg\\,max}\\limits"],
+                         argmin: ["\\mathop{\\rm arg\\,min}\\limits"]},
+                extensions: ["AMSmath.js","AMSsymbols.js"],
+                equationNumbers: { autoNumber: "AMS" } },
+         extensions: ["tex2jax.js"],
+         jax: ["input/TeX","output/HTML-CSS"],
+         tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+                    processEscapes: true },
+         "HTML-CSS": { availableFonts: ["TeX"],
+                       linebreaks: { automatic: true } }
+     });
+ </script>
+
+    <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+       tex2jax: {
+         skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+       }
+     });
+ </script>
+
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+      </script>
+
+
+
+
+</body>
+
+</html>
