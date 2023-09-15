@@ -58,8 +58,8 @@
             <p style="text-align: justify;">
               <font color="061E61"> 
                 Audio super-resolution is a fundamental task that predicts high-frequency components for low-resolution audio, enhancing audio quality in digital applications. 
-                Previous methods have limitations such as the limited scope of audio types~(e.g., music, speech) and specific bandwidth settings they can handle (e.g., 4 kHz to 8 kHz). 
-                W introduce a diffusion-based generative model, AudioSR, that is capable of performing robust audio super-resolution on versatile audio types, including sound effects, music, and speech. 
+                Previous methods have limitations such as the limited scope of audio types (e.g., music, speech) and specific bandwidth settings they can handle (e.g., 4 kHz to 8 kHz). 
+                We introduce a diffusion-based generative model, AudioSR, that is capable of performing robust audio super-resolution on versatile audio types, including sound effects, music, and speech. 
                 Specifically, AudioSR can upsample any input audio signal within the bandwidth range of 2 kHz to 16 kHz to a high-resolution audio signal at 24 kHz bandwidth with a sampling rate of 48 kHz.
                 Extensive objective evaluation on various audio super-resolution benchmarks demonstrates the strong result achieved by the proposed model. 
                 In addition, our subjective evaluation shows that AudioSR can acts as a plug-and-play module to enhance the generation quality of a wide range of audio generative models, 
@@ -82,16 +82,37 @@
             </li> -->
 
             <br></br>
-            <figure>
-              <p align="center"><img src="model_arch.png" width="80%" class="center" /></p>
-              <figcaption>
-                <p style="text-align: justify;">
-                  <font color="061E61"><b>Figure 1:</b> 
-                    The AudioSR architecture. 
-                    The replacement-based post-processing aims to preserve the original lower-frequency information in the model output.
-                </p>
-              </figcaption>
-            </figure>
+            <table>
+              <tbody>
+                <tr>
+                  <td scope="col" width="50%">
+                    <figure>
+                      <p align="center"><img src="model_arch.png" width="90%" class="center" /></p>
+                      <figcaption>
+                        <p style="text-align: justify; margin:10px;" >
+                          <font color="061E61" style="font-size: 0.75em;"><b>Figure 1:</b> 
+                            The AudioSR architecture. 
+                            The replacement-based post-processing aims to preserve the original lower-frequency information in the model output.
+                        </p>
+                      </figcaption>
+                    </figure>
+                  </td>
+                  <td scope="col" width="50%">
+                    <figure>
+                      <p align="center"><img src="table.png" width="100%" class="center" /></p>
+                      <figcaption>
+                        <p style="text-align: justify; padding:10px;">
+                          <font color="061E61" style="font-size: 0.75em;"><b>Table 1:</b> 
+                           Subjective evaluation shows that applyin AudioSR for audio super-resolution on the output of audio generation models can significantly enhance the perceptual quality.
+                        </p>
+                      </figcaption>
+                    </figure>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            
+            
             <!-- <table class="table" align="center" style="table-layout: fixed;word-break:break-word">
               <thead>
                 <tr>
@@ -120,7 +141,7 @@
             
 
             <br></br>
-            <h2 id="TTA Generation with Human Text Prompt">
+            <h2 id="TTA Generation with Human Text Prompt" class="text-center">
               <font color="000093">Audio Super-Resolution across Different Models</font>
             </h2>
 
@@ -129,7 +150,7 @@
               </b></p>
 
 
-            <table class="table" align="center" style="table-layout: fixed;word-break:break-word">
+            <table class="table text-center" align="center" style="table-layout: fixed;word-break:break-word">
               <thead>
                 <tr>
                   <td scope="col" width="20%">
@@ -159,7 +180,7 @@
                     </div> 
                     <div>
                       <figure>
-                        <p align="center"><img src="vis_demo/speech_up_1.png" width="100%" height="180px" class="center" /></p>
+                        <p align="center"><img src="vis_demo/speech_up_1.png" width="100%" height="120px" class="center" /></p>
                       </figure>
                     </div> 
                   </td>
@@ -172,7 +193,7 @@
                     </div> 
                     <div>
                       <figure>
-                        <p align="center"><img src="vis_demo/speech_dnn_1.png" width="100%" height="180px" class="center" /></p>
+                        <p align="center"><img src="vis_demo/speech_dnn_1.png" width="100%" height="120px" class="center" /></p>
                       </figure>
                     </div> 
                   </td>
@@ -185,7 +206,7 @@
                     </div> 
                     <div>
                       <figure>
-                        <p align="center"><img src="vis_demo/speech_resunet_1.png" width="100%" height="180px" class="center" /></p>
+                        <p align="center"><img src="vis_demo/speech_resunet_1.png" width="100%" height="120px" class="center" /></p>
                       </figure>
                     </div> 
                   </td>
@@ -198,7 +219,7 @@
                     </div> 
                     <div>
                       <figure>
-                        <p align="center"><img src="vis_demo/speech_audiosr_1.png" width="100%"  height="180px" class="center" /></p>
+                        <p align="center"><img src="vis_demo/speech_audiosr_1.png" width="100%"  height="120px" class="center" /></p>
                       </figure>
                     </div> 
                   </td>
@@ -211,7 +232,7 @@
                     </div> 
                     <div>
                       <figure>
-                        <p align="center"><img src="vis_demo/speech_gt_1.png" width="100%"  height="180px" class="center" /></p>
+                        <p align="center"><img src="vis_demo/speech_gt_1.png" width="100%"  height="120px" class="center" /></p>
                       </figure>
                     </div> 
                   </td>
@@ -226,7 +247,7 @@
                     </div> 
                     <div>
                       <figure>
-                        <p align="center"><img src="vis_demo/speech_up_2.png" width="100%" height="180px" class="center" /></p>
+                        <p align="center"><img src="vis_demo/speech_up_2.png" width="100%" height="120px" class="center" /></p>
                       </figure>
                     </div> 
                   </td>
@@ -239,7 +260,7 @@
                     </div> 
                     <div>
                       <figure>
-                        <p align="center"><img src="vis_demo/speech_dnn_2.png" width="100%" height="180px" class="center" /></p>
+                        <p align="center"><img src="vis_demo/speech_dnn_2.png" width="100%" height="120px" class="center" /></p>
                       </figure>
                     </div> 
                   </td>
@@ -252,7 +273,7 @@
                     </div> 
                     <div>
                       <figure>
-                        <p align="center"><img src="vis_demo/speech_resunet_2.png" width="100%" height="180px" class="center" /></p>
+                        <p align="center"><img src="vis_demo/speech_resunet_2.png" width="100%" height="120px" class="center" /></p>
                       </figure>
                     </div> 
                   </td>
@@ -265,7 +286,7 @@
                     </div> 
                     <div>
                       <figure>
-                        <p align="center"><img src="vis_demo/speech_audiosr_2.png" width="100%" height="180px" class="center" /></p>
+                        <p align="center"><img src="vis_demo/speech_audiosr_2.png" width="100%" height="120px" class="center" /></p>
                       </figure>
                     </div> 
                   </td>
@@ -278,7 +299,7 @@
                     </div> 
                     <div>
                       <figure>
-                        <p align="center"><img src="vis_demo/speech_gt_2.png" width="100%"  height="180px" class="center" /></p>
+                        <p align="center"><img src="vis_demo/speech_gt_2.png" width="100%"  height="120px" class="center" /></p>
                       </figure>
                     </div> 
                   </td>
@@ -293,7 +314,7 @@
                     </div> 
                     <div>
                       <figure>
-                        <p align="center"><img src="vis_demo/speech_up_3.png" width="100%" height="180px" class="center" /></p>
+                        <p align="center"><img src="vis_demo/speech_up_3.png" width="100%" height="120px" class="center" /></p>
                       </figure>
                     </div> 
                   </td>
@@ -306,7 +327,7 @@
                     </div> 
                     <div>
                       <figure>
-                        <p align="center"><img src="vis_demo/speech_dnn_3.png" width="100%" height="180px" class="center" /></p>
+                        <p align="center"><img src="vis_demo/speech_dnn_3.png" width="100%" height="120px" class="center" /></p>
                       </figure>
                     </div> 
                   </td>
@@ -319,7 +340,7 @@
                     </div> 
                     <div>
                       <figure>
-                        <p align="center"><img src="vis_demo/speech_resunet_3.png" width="100%" height="180px" class="center" /></p>
+                        <p align="center"><img src="vis_demo/speech_resunet_3.png" width="100%" height="120px" class="center" /></p>
                       </figure>
                     </div> 
                   </td>
@@ -332,7 +353,7 @@
                     </div> 
                     <div>
                       <figure>
-                        <p align="center"><img src="vis_demo/speech_audiosr_3.png" width="100%" height="180px" class="center" /></p>
+                        <p align="center"><img src="vis_demo/speech_audiosr_3.png" width="100%" height="120px" class="center" /></p>
                       </figure>
                     </div> 
                   </td>
@@ -345,7 +366,7 @@
                     </div> 
                     <div>
                       <figure>
-                        <p align="center"><img src="vis_demo/speech_gt_3.png" width="100%" height="180px" class="center" /></p>
+                        <p align="center"><img src="vis_demo/speech_gt_3.png" width="100%" height="120px" class="center" /></p>
                       </figure>
                     </div> 
                   </td>
@@ -360,7 +381,7 @@
                     </div> 
                     <div>
                       <figure>
-                        <p align="center"><img src="vis_demo/speech_up_4.png" width="100%" height="180px" class="center" /></p>
+                        <p align="center"><img src="vis_demo/speech_up_4.png" width="100%" height="120px" class="center" /></p>
                       </figure>
                     </div> 
                   </td>
@@ -373,7 +394,7 @@
                     </div> 
                     <div>
                       <figure>
-                        <p align="center"><img src="vis_demo/speech_dnn_4.png" width="100%" height="180px" class="center" /></p>
+                        <p align="center"><img src="vis_demo/speech_dnn_4.png" width="100%" height="120px" class="center" /></p>
                       </figure>
                     </div> 
                   </td>
@@ -386,7 +407,7 @@
                     </div> 
                     <div>
                       <figure>
-                        <p align="center"><img src="vis_demo/speech_resunet_4.png" width="100%" height="180px" class="center" /></p>
+                        <p align="center"><img src="vis_demo/speech_resunet_4.png" width="100%" height="120px" class="center" /></p>
                       </figure>
                     </div> 
                   </td>
@@ -399,7 +420,7 @@
                     </div> 
                     <div>
                       <figure>
-                        <p align="center"><img src="vis_demo/speech_audiosr_4.png" width="100%" height="180px" class="center" /></p>
+                        <p align="center"><img src="vis_demo/speech_audiosr_4.png" width="100%" height="120px" class="center" /></p>
                       </figure>
                     </div> 
                   </td>
@@ -412,7 +433,7 @@
                     </div> 
                     <div>
                       <figure>
-                        <p align="center"><img src="vis_demo/speech_gt_4.png" width="100%" height="180px" class="center" /></p>
+                        <p align="center"><img src="vis_demo/speech_gt_4.png" width="100%" height="120px" class="center" /></p>
                       </figure>
                     </div> 
                   </td>
@@ -424,7 +445,7 @@
             </b></p>
 
 
-          <table class="table" align="center" style="table-layout: fixed;word-break:break-word">
+          <table class="table text-center" align="center" style="table-layout: fixed;word-break:break-word">
             <thead>
               <tr>
                 <td scope="col" width="20%">
@@ -454,7 +475,7 @@
                   </div> 
                   <div>
                     <figure>
-                      <p align="center"><img src="vis_demo/event_up_1.png" width="100%" height="180px" class="center" /></p>
+                      <p align="center"><img src="vis_demo/event_up_1.png" width="100%" height="120px" class="center" /></p>
                     </figure>
                   </div> 
                 </td>
@@ -467,7 +488,7 @@
                   </div> 
                   <div>
                     <figure>
-                      <p align="center"><img src="vis_demo/event_dnn_1.png" width="100%" height="180px" class="center" /></p>
+                      <p align="center"><img src="vis_demo/event_dnn_1.png" width="100%" height="120px" class="center" /></p>
                     </figure>
                   </div> 
                 </td>
@@ -480,7 +501,7 @@
                   </div> 
                   <div>
                     <figure>
-                      <p align="center"><img src="vis_demo/event_resunet_1.png" width="100%" height="180px" class="center" /></p>
+                      <p align="center"><img src="vis_demo/event_resunet_1.png" width="100%" height="120px" class="center" /></p>
                     </figure>
                   </div> 
                 </td>
@@ -493,7 +514,7 @@
                   </div> 
                   <div>
                     <figure>
-                      <p align="center"><img src="vis_demo/event_audiosr_1.png" width="100%"  height="180px" class="center" /></p>
+                      <p align="center"><img src="vis_demo/event_audiosr_1.png" width="100%"  height="120px" class="center" /></p>
                     </figure>
                   </div> 
                 </td>
@@ -506,7 +527,7 @@
                   </div> 
                   <div>
                     <figure>
-                      <p align="center"><img src="vis_demo/event_gt_1.png" width="100%"  height="180px" class="center" /></p>
+                      <p align="center"><img src="vis_demo/event_gt_1.png" width="100%"  height="120px" class="center" /></p>
                     </figure>
                   </div> 
                 </td>
@@ -521,7 +542,7 @@
                   </div> 
                   <div>
                     <figure>
-                      <p align="center"><img src="vis_demo/event_up_2.png" width="100%" height="180px" class="center" /></p>
+                      <p align="center"><img src="vis_demo/event_up_2.png" width="100%" height="120px" class="center" /></p>
                     </figure>
                   </div> 
                 </td>
@@ -534,7 +555,7 @@
                   </div> 
                   <div>
                     <figure>
-                      <p align="center"><img src="vis_demo/event_dnn_2.png" width="100%" height="180px" class="center" /></p>
+                      <p align="center"><img src="vis_demo/event_dnn_2.png" width="100%" height="120px" class="center" /></p>
                     </figure>
                   </div> 
                 </td>
@@ -547,7 +568,7 @@
                   </div> 
                   <div>
                     <figure>
-                      <p align="center"><img src="vis_demo/event_resunet_2.png" width="100%" height="180px" class="center" /></p>
+                      <p align="center"><img src="vis_demo/event_resunet_2.png" width="100%" height="120px" class="center" /></p>
                     </figure>
                   </div> 
                 </td>
@@ -560,7 +581,7 @@
                   </div> 
                   <div>
                     <figure>
-                      <p align="center"><img src="vis_demo/event_audiosr_2.png" width="100%" height="180px" class="center" /></p>
+                      <p align="center"><img src="vis_demo/event_audiosr_2.png" width="100%" height="120px" class="center" /></p>
                     </figure>
                   </div> 
                 </td>
@@ -573,7 +594,7 @@
                   </div> 
                   <div>
                     <figure>
-                      <p align="center"><img src="vis_demo/event_gt_2.png" width="100%"  height="180px" class="center" /></p>
+                      <p align="center"><img src="vis_demo/event_gt_2.png" width="100%"  height="120px" class="center" /></p>
                     </figure>
                   </div> 
                 </td>
@@ -588,7 +609,7 @@
                   </div> 
                   <div>
                     <figure>
-                      <p align="center"><img src="vis_demo/event_up_3.png" width="100%" height="180px" class="center" /></p>
+                      <p align="center"><img src="vis_demo/event_up_3.png" width="100%" height="120px" class="center" /></p>
                     </figure>
                   </div> 
                 </td>
@@ -601,7 +622,7 @@
                   </div> 
                   <div>
                     <figure>
-                      <p align="center"><img src="vis_demo/event_dnn_3.png" width="100%" height="180px" class="center" /></p>
+                      <p align="center"><img src="vis_demo/event_dnn_3.png" width="100%" height="120px" class="center" /></p>
                     </figure>
                   </div> 
                 </td>
@@ -614,7 +635,7 @@
                   </div> 
                   <div>
                     <figure>
-                      <p align="center"><img src="vis_demo/event_resunet_3.png" width="100%" height="180px" class="center" /></p>
+                      <p align="center"><img src="vis_demo/event_resunet_3.png" width="100%" height="120px" class="center" /></p>
                     </figure>
                   </div> 
                 </td>
@@ -627,7 +648,7 @@
                   </div> 
                   <div>
                     <figure>
-                      <p align="center"><img src="vis_demo/event_audiosr_3.png" width="100%" height="180px" class="center" /></p>
+                      <p align="center"><img src="vis_demo/event_audiosr_3.png" width="100%" height="120px" class="center" /></p>
                     </figure>
                   </div> 
                 </td>
@@ -640,7 +661,7 @@
                   </div> 
                   <div>
                     <figure>
-                      <p align="center"><img src="vis_demo/event_gt_3.png" width="100%" height="180px" class="center" /></p>
+                      <p align="center"><img src="vis_demo/event_gt_3.png" width="100%" height="120px" class="center" /></p>
                     </figure>
                   </div> 
                 </td>
@@ -654,7 +675,7 @@
           </b></p>
 
 
-        <table class="table" align="center" style="table-layout: fixed;word-break:break-word">
+        <table class="table text-center" align="center" style="table-layout: fixed;word-break:break-word">
           <thead>
             <tr>
               <td scope="col" width="33%">
@@ -677,19 +698,19 @@
                 </div> 
                 <div>
                   <figure>
-                    <p align="center"><img src="vis_demo/music_up_1.png" width="100%" height="180px" class="center" /></p>
+                    <p align="center"><img src="vis_demo/music_up_1.png" width="100%" height="120px" class="center" /></p>
                   </figure>
                 </div> 
               </td>
               <td scope="row" width="33%">
                 <div>
                 <audio controls="controls" style="width: 100%;">
-                  <source src="vis_demo/music_audiosr_1.wav" />Your browser does not support the audio element.
+                  <source src="vis_demo/msuic_audiosr_1.wav" />Your browser does not support the audio element.
                 </audio>
                 </div> 
                 <div>
                   <figure>
-                    <p align="center"><img src="vis_demo/music_audiosr_1.png" width="100%"  height="180px" class="center" /></p>
+                    <p align="center"><img src="vis_demo/music_audiosr_1.png" width="100%"  height="120px" class="center" /></p>
                   </figure>
                 </div> 
               </td>
@@ -702,7 +723,7 @@
                 </div> 
                 <div>
                   <figure>
-                    <p align="center"><img src="vis_demo/music_gt_1.png" width="100%"  height="180px" class="center" /></p>
+                    <p align="center"><img src="vis_demo/music_gt_1.png" width="100%"  height="120px" class="center" /></p>
                   </figure>
                 </div> 
               </td>
@@ -717,7 +738,7 @@
               </div> 
               <div>
                 <figure>
-                  <p align="center"><img src="vis_demo/music_up_2.png" width="100%" height="180px" class="center" /></p>
+                  <p align="center"><img src="vis_demo/music_up_2.png" width="100%" height="120px" class="center" /></p>
                 </figure>
               </div> 
             </td>
@@ -729,7 +750,7 @@
               </div> 
               <div>
                 <figure>
-                  <p align="center"><img src="vis_demo/music_audiosr_2.png" width="100%"  height="180px" class="center" /></p>
+                  <p align="center"><img src="vis_demo/music_audiosr_2.png" width="100%"  height="120px" class="center" /></p>
                 </figure>
               </div> 
             </td>
@@ -742,7 +763,7 @@
               </div> 
               <div>
                 <figure>
-                  <p align="center"><img src="vis_demo/music_gt_2.png" width="100%"  height="180px" class="center" /></p>
+                  <p align="center"><img src="vis_demo/music_gt_2.png" width="100%"  height="120px" class="center" /></p>
                 </figure>
               </div> 
             </td>
@@ -757,7 +778,7 @@
             </div> 
             <div>
               <figure>
-                <p align="center"><img src="vis_demo/music_up_3.png" width="100%" height="180px" class="center" /></p>
+                <p align="center"><img src="vis_demo/music_up_3.png" width="100%" height="120px" class="center" /></p>
               </figure>
             </div> 
           </td>
@@ -769,7 +790,7 @@
             </div> 
             <div>
               <figure>
-                <p align="center"><img src="vis_demo/music_audiosr_3.png" width="100%"  height="180px" class="center" /></p>
+                <p align="center"><img src="vis_demo/music_audiosr_3.png" width="100%"  height="120px" class="center" /></p>
               </figure>
             </div> 
           </td>
@@ -782,14 +803,331 @@
             </div> 
             <div>
               <figure>
-                <p align="center"><img src="vis_demo/music_gt_3.png" width="100%"  height="180px" class="center" /></p>
+                <p align="center"><img src="vis_demo/music_gt_3.png" width="100%"  height="120px" class="center" /></p>
               </figure>
             </div> 
           </td>
       </tr>
           </tbody>
         </table>
+
+        <h2 id="TTA Generation with Human Text Prompt" class="text-center">
+          <font color="000093">AudioSR on Improving Generative Models</font>
+        </h2>
+
+        <p><b>
+            <font color="061E61">FastSpeech 2 (Text-to-Speech, 16 kHz to 48 kHz):</font>
+        </b></p>
+
+
+        <table class="table text-center" align="center" style="table-layout: fixed;word-break:break-word">
+          <thead>
+            <tr>
+              <td scope="col" width="50%">
+                <font color="061E61">Generation</font>
+              </td>
+              <td scope="col" width="50%">
+                <font color="061E61">AudioSR Improvement</font>
+              </td>
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td scope="row" width="50%">
+                <div>
+                <audio controls="controls" style="width: 100%;">
+                  <source src="generative_demo/speech_up_1.wav" />Your browser does not support the audio element.
+                </audio>
+                </div> 
+                <div>
+                  <figure>
+                    <p align="center"><img src="generative_demo/speech_up_1.png" width="100%" height="150px" class="center" /></p>
+                  </figure>
+                </div> 
+              </td>
+
+              <td scope="row" width="50%">
+                <div>
+                <audio controls="controls" style="width: 100%;">
+                  <source src="generative_demo/speech_audiosr_1.wav" />Your browser does not support the audio element.
+                </audio>
+                </div> 
+                <div>
+                  <figure>
+                    <p align="center"><img src="generative_demo/speech_audiosr_1.png" width="100%" height="150px" class="center" /></p>
+                  </figure>
+                </div> 
+              </td>
+            </tr>
+
+            <tr>
+              <td scope="row" width="50%">
+                <div>
+                <audio controls="controls" style="width: 100%;">
+                  <source src="generative_demo/speech_up_2.wav" />Your browser does not support the audio element.
+                </audio>
+                </div> 
+                <div>
+                  <figure>
+                    <p align="center"><img src="generative_demo/speech_up_2.png" width="100%" height="150px" class="center" /></p>
+                  </figure>
+                </div> 
+              </td>
+
+              <td scope="row" width="50%">
+                <div>
+                <audio controls="controls" style="width: 100%;">
+                  <source src="generative_demo/speech_audiosr_2.wav" />Your browser does not support the audio element.
+                </audio>
+                </div> 
+                <div>
+                  <figure>
+                    <p align="center"><img src="generative_demo/speech_audiosr_2.png" width="100%" height="150px" class="center" /></p>
+                  </figure>
+                </div> 
+              </td>
+            </tr>
+
+            <tr>
+              <td scope="row" width="50%">
+                <div>
+                <audio controls="controls" style="width: 100%;">
+                  <source src="generative_demo/speech_up_3.wav" />Your browser does not support the audio element.
+                </audio>
+                </div> 
+                <div>
+                  <figure>
+                    <p align="center"><img src="generative_demo/speech_up_3.png" width="100%" height="150px" class="center" /></p>
+                  </figure>
+                </div> 
+              </td>
+
+              <td scope="row" width="50%">
+                <div>
+                <audio controls="controls" style="width: 100%;">
+                  <source src="generative_demo/speech_audiosr_3.wav" />Your browser does not support the audio element.
+                </audio>
+                </div> 
+                <div>
+                  <figure>
+                    <p align="center"><img src="generative_demo/speech_audiosr_3.png" width="100%" height="150px" class="center" /></p>
+                  </figure>
+                </div> 
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+
+        <p><b>
+          <font color="061E61">AudioLDM (Text-to-Audio, 16 kHz to 48 kHz):</font>
+      </b></p>
+
+        <table class="table text-center" align="center" style="table-layout: fixed;word-break:break-word">
+          <thead>
+            <tr>
+              <td scope="col" width="50%">
+                <font color="061E61">Generation</font>
+              </td>
+              <td scope="col" width="50%">
+                <font color="061E61">AudioSR Improvement</font>
+              </td>
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td scope="row" width="50%">
+                <div>
+                <audio controls="controls" style="width: 100%;">
+                  <source src="generative_demo/A_rubber_duck_squeaking_in_the_bathtub._unproc.wav" />Your browser does not support the audio element.
+                </audio>
+                </div> 
+                <div>
+                  <figure>
+                    <p align="center"><img src="generative_demo/A_rubber_duck_up.png" width="100%" height="150px" class="center" /></p>
+                  </figure>
+                </div> 
+              </td>
+
+              <td scope="row" width="50%">
+                <div>
+                <audio controls="controls" style="width: 100%;">
+                  <source src="generative_demo/A_rubber_duck_squeaking_in_the_bathtub..wav" />Your browser does not support the audio element.
+                </audio>
+                </div> 
+                <div>
+                  <figure>
+                    <p align="center"><img src="generative_demo/A_rubber_duck_audiosr.png" width="100%" height="150px" class="center" /></p>
+                  </figure>
+                </div> 
+              </td>
+            </tr>
+
+            <tr>
+              <td scope="row" width="50%">
+                <div>
+                <audio controls="controls" style="width: 100%;">
+                  <source src="generative_demo/Cartoon-style__boing__sound_effect._unproc.wav" />Your browser does not support the audio element.
+                </audio>
+                </div> 
+                <div>
+                  <figure>
+                    <p align="center"><img src="generative_demo/cartoon-style_up.png" width="100%" height="150px" class="center" /></p>
+                  </figure>
+                </div> 
+              </td>
+
+              <td scope="row" width="50%">
+                <div>
+                <audio controls="controls" style="width: 100%;">
+                  <source src="generative_demo/Cartoon-style__boing__sound_effect..wav" />Your browser does not support the audio element.
+                </audio>
+                </div> 
+                <div>
+                  <figure>
+                    <p align="center"><img src="generative_demo/cartoon-style_audiosr.png" width="100%" height="150px" class="center" /></p>
+                  </figure>
+                </div> 
+              </td>
+            </tr>
+
+            <tr>
+              <td scope="row" width="50%">
+                <div>
+                <audio controls="controls" style="width: 100%;">
+                  <source src="generative_demo/Laughter_and_cheers_at_a_festive_carnival._unproc.wav" />Your browser does not support the audio element.
+                </audio>
+                </div> 
+                <div>
+                  <figure>
+                    <p align="center"><img src="generative_demo/Laugher_up.png" width="100%" height="150px" class="center" /></p>
+                  </figure>
+                </div> 
+              </td>
+
+              <td scope="row" width="50%">
+                <div>
+                <audio controls="controls" style="width: 100%;">
+                  <source src="generative_demo/Laughter_and_cheers_at_a_festive_carnival..wav" />Your browser does not support the audio element.
+                </audio>
+                </div> 
+                <div>
+                  <figure>
+                    <p align="center"><img src="generative_demo/Laughter_audiosr.png" width="100%" height="150px" class="center" /></p>
+                  </figure>
+                </div> 
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
            
+        <p><b>
+          <font color="061E61">MusicGen (Text-to-Music, 32 kHz to 48 kHz):</font>
+      </b></p>
+
+        <table class="table text-center" align="center" style="table-layout: fixed;word-break:break-word">
+          <thead>
+            <tr>
+              <td scope="col" width="50%">
+                <font color="061E61">Generation</font>
+              </td>
+              <td scope="col" width="50%">
+                <font color="061E61">AudioSR Improvement</font>
+              </td>
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td scope="row" width="50%">
+                <div>
+                <audio controls="controls" style="width: 100%;">
+                  <source src="generative_demo/F1X7egd8Us0_unproc.wav" />Your browser does not support the audio element.
+                </audio>
+                </div> 
+                <div>
+                  <figure>
+                    <p align="center"><img src="generative_demo/F1X7egd8Us0_up.png" width="100%" height="150px" class="center" /></p>
+                  </figure>
+                </div> 
+              </td>
+
+              <td scope="row" width="50%">
+                <div>
+                <audio controls="controls" style="width: 100%;">
+                  <source src="generative_demo/F1X7egd8Us0.wav" />Your browser does not support the audio element.
+                </audio>
+                </div> 
+                <div>
+                  <figure>
+                    <p align="center"><img src="generative_demo/F1X7egd8Us0_audiosr.png" width="100%" height="150px" class="center" /></p>
+                  </figure>
+                </div> 
+              </td>
+            </tr>
+
+            <tr>
+              <td scope="row" width="50%">
+                <div>
+                <audio controls="controls" style="width: 100%;">
+                  <source src="generative_demo/je1amtXOKF4_unproc.wav" />Your browser does not support the audio element.
+                </audio>
+                </div> 
+                <div>
+                  <figure>
+                    <p align="center"><img src="generative_demo/je1amtXOKF4_up.png" width="100%" height="150px" class="center" /></p>
+                  </figure>
+                </div> 
+              </td>
+
+              <td scope="row" width="50%">
+                <div>
+                <audio controls="controls" style="width: 100%;">
+                  <source src="generative_demo/je1amtXOKF4.wav" />Your browser does not support the audio element.
+                </audio>
+                </div> 
+                <div>
+                  <figure>
+                    <p align="center"><img src="generative_demo/je1amtXOKF4_audiosr.png" width="100%" height="150px" class="center" /></p>
+                  </figure>
+                </div> 
+              </td>
+            </tr>
+
+            <tr>
+              <td scope="row" width="50%">
+                <div>
+                <audio controls="controls" style="width: 100%;">
+                  <source src="generative_demo/ClNTn1wtq7E_unproc.wav" />Your browser does not support the audio element.
+                </audio>
+                </div> 
+                <div>
+                  <figure>
+                    <p align="center"><img src="generative_demo/ClNTn1wtq7E_up.png" width="100%" height="150px" class="center" /></p>
+                  </figure>
+                </div> 
+              </td>
+
+              <td scope="row" width="50%">
+                <div>
+                <audio controls="controls" style="width: 100%;">
+                  <source src="generative_demo/ClNTn1wtq7E.wav" />Your browser does not support the audio element.
+                </audio>
+                </div> 
+                <div>
+                  <figure>
+                    <p align="center"><img src="generative_demo/ClNTn1wtq7E_audiosr.png" width="100%" height="150px" class="center" /></p>
+                  </figure>
+                </div> 
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
           </section>
         </article>
       </main>
